@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- 자동 새로고침 -->
+    <meta http-equiv="refresh" content="1">
+</head>
+
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form action="/" method="get">
+        <p><img src="/resources/img/no-image.png"/></p>
+        <div th:replace="fragments/footer :: footer"/>
+    </form>
+</div>
+</body>
+</html>

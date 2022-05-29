@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/css/change.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container" id="content">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+    <form role="form" action="/images/monitor" method="post">
+        <!-- 큰 이미지 화면 -->
+        <div id="bigImages" name="bigImages">
+            <p th:text="${firstImage.name}">이미지 이름</p>
+            <input type="image" id="big" name="big" th:src="@{/display?filename=} + ${firstImage.name}">
+
+            <!-- 큰 이미지 체크화면 -->
+            <div class = "form-check">
+                <input type="checkbox" name="status" class="form-check-input" value="실신" onclick="checkOnlyOne(this)"/> 실신 <br/>
+                <input type="checkbox" name="status" class="form-check-input" value="오작동" onclick="checkOnlyOne(this)"/> 오작동 <br/>
+                <input type="checkbox" name="status" class="form-check-input" value="기타" onclick="javascript:checkOnlyOne(this);toggleTextbox(this);"/> 기타
+                <input type="text" id="etc" name="etc" class="form-control" placeholder="기타사항">
+            </div>
+            <!--<a th:href="@{/images/{id}/check (id=${firstImage.id})}" class="btn btn-primary" role="button">Submit</a>-->
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <!-- 큰 이미지 화면 끝 -->
+
+        <!-- 체크리스트 이미지 화면-->
+        <div id="smallImages" th:each="image : ${images}">
+            <p th:text="${image.name}"/>
+            <img class="small" th:src="@{/display?filename=} + ${image.name}" onclick="changepic()">
+        </div>
+        <!-- 체크리스트 이미지 끝 -->
+    </form>
+</div>
+</body>
+<script src="/js/change.js"></script>
+<script>
+    function checkOnlyOne(element) {
+        const checkboxes = document.getElementsByName("status");
+        checkboxes.forEach((cb) => {
+            cb.checked = false;
+        })
+        element.checked = true;
+    }
+
+    function toggleTextbox(checkbox) {
+        const textbox_elem = document.getElementById("etc");
+        textbox_elem.disabled = checkbox.checked ? false : true;
+
+        if(textbox_elem.disabled) {
+            textbox_elem.value = null;
+        } else {
+            textbox_elem.focus();
+        }
+    }
+</script>
+</html>

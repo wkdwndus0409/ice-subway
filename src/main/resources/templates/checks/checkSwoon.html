@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<head></head>
+<body>
+<div class="container">
+    <ul class="nav nav-pills pull-right">
+        <li><a href="/">Home</a></li>
+    </ul>
+    <a href="/storage"><h3 class="text-muted">이전</h3></a>
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>이미지</th>
+                <th>이름</th>
+                <th>날짜</th>
+                <th>처리상태</th>
+                <th>기타사항</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="checkImage : ${checkImages}">
+                <td th:text="${checkImage.id}"></td>
+                <td>
+                    <img th:src="@{/display?filename=} + ${checkImage.image.name}" class="click_img" width="150" height="90">
+                </td>
+                <td th:text="${checkImage.image.name}"></td>
+                <td th:text="${checkImage.image.dateTime}"></td>
+                <td th:text="${checkImage.checkStatus}"></td>
+                <td th:text="${checkImage.etc}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:replace="fragments/footer :: footer"/>
+</div> <!-- /container -->
+</body>
+<script type="text/javascript">
+    var img = document.getElementsByClassName("click_img");
+    for (var x = 0; x < img.length; x++) {
+        img.item(x).onclick=function() {window.open(this.src)};
+    }
+</script>
+</html>
